@@ -1,0 +1,184 @@
+/* ===== Theme tokens ===== */
+:root {
+  --accent: #33e1b5; /* 主題色（你指定的綠） */
+  --accent-hover: #29c49d; /* hover 稍微深一點 */
+  --last-outline-color: #66ccff; /* 最後一步描邊預設，可自行改 */
+  --last-outline-width: 2px;
+}
+
+/* 護眼深色（預設） */
+:root[data-theme="eye"] {
+  --bg: #0e1116;
+  --text: #e7e9ec;
+  --text-dim: #aab3be;
+  --border: #2a3140;
+
+  /* 扁平木頭棋面 */
+  --board-flat-1: #c5a06b;
+  --board-flat-2: #b48c57;
+
+  --grid: #5f472c;
+  --grid-bold: #523a23;
+  --star: #4a3423;
+  --crosshair: #7aa2f7;
+}
+
+/* 普通（亮色） */
+:root[data-theme="light"] {
+  --bg: #f6f8fa;
+  --text: #1f2328;
+  --text-dim: #4b5563;
+  --border: #d0d7de;
+
+  /* 亮色木頭（稍微淡） */
+  --board-flat-1: #e7c995;
+  --board-flat-2: #ddb876;
+
+  --grid: #7c5a33;
+  --grid-bold: #6b4e2f;
+  --star: #5b432a;
+  --crosshair: #2563eb; /* 藍一點 */
+}
+
+/* ===== Base ===== */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    "Noto Sans TC", "Noto Sans", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* 標題用主題色 */
+h1,
+h2,
+h3 {
+  color: var(--accent);
+}
+
+/* 版面元件 */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+.card {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--bg), white 3%),
+    color-mix(in oklab, var(--bg), black 4%)
+  );
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* 控制列與按鈕 */
+.select {
+  appearance: none;
+  background: color-mix(in oklab, var(--bg), white 6%);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+.btn {
+  background: var(--accent);
+  color: #0e1116;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.status {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--text);
+}
+.hint {
+  opacity: 0.8;
+  margin-top: 12px;
+}
+
+/* ===== 扁平棋盤容器（整塊木頭背景覆蓋座標區） ===== */
+.board-root {
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid var(--grid-bold);
+  background: linear-gradient(180deg, var(--board-flat-1), var(--board-flat-2));
+  user-select: none;
+  overflow: hidden;
+}
+
+/* 棋子 */
+.stone {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.stone.black {
+  background: radial-gradient(circle at 32% 32%, #3f4654, #0e1015 75%);
+  border: 1px solid #0b0f18;
+}
+.stone.white {
+  background: radial-gradient(circle at 32% 32%, #ffffff, #cfd6df 70%);
+  border: 1px solid #b7c2d0;
+}
+
+/* 最後一步：可改色，不放大 */
+.stone.last {
+  outline: var(--last-outline-width) solid var(--last-outline-color);
+  transform: none;
+}
+
+/* 勝利遮罩 */
+.win-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.28);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+/* 禁手小叉叉顏色（可愛一點的桃紅綠混） */
+:root {
+  --forbid: color-mix(in oklab, #ff6b6b 70%, var(--accent) 30%);
+}
+
+/* 輕量吐司（底部置中，不擋操作） */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: color-mix(in oklab, var(--bg), #ffffff 12%);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* 你現有的 .stone.black / .stone.white 等樣式保留即可 */

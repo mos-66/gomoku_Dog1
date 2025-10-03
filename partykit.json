@@ -1,0 +1,8 @@
+{
+  "name": "gomoku",
+  "main": "realtime/server.ts",
+  "compatibilityDate": "2024-10-01",
+  "parties": {
+    "rooms": "realtime/rooms.ts"
+  }
+}
